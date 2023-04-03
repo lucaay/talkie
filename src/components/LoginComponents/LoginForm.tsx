@@ -1,41 +1,66 @@
+"use client";
 import { Button, PasswordInput, TextInput } from "@mantine/core";
 import Link from "next/link";
+import router from "next/router";
+import signIn from "@/firebase/auth/signin";
 import React, { useEffect, useState } from "react";
 
-
 function LoginForm() {
-    const [errors, setErrors] = useState<{password?: string, email?: string}>({ password: "" , email:""});
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [errors, setErrors] = useState<{
+        email?: string;
+        password?: string;
+    }>({});
+    const [firebaseErrors, setFirebaseErrors] = useState<{
+        [key: string]: any;
+    }>({});
 
-    const handlePassword = (e: any) => {
-        setPassword(e.target.value);
+    const validateEmail = (email: string) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email) && email.length > 0;
     };
-    const handleEmail = (e: any) => {
-        setEmail(e.target.value);
+    const validatePassword = (password: string) => {
+        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+        return regex.test(password);
     };
 
-    const handleLogin = () => {
+    const validateInputs = (email: string, password: string) => {
         let tempErrors: {} = {};
-        const emailRegex = /^\S+@\S+\.\S+$/;
-        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-        if (!emailRegex.test(email)) {
-            tempErrors = {
-                ...tempErrors,
-                email: "Introduceti un email valid.",
-            };
-        }
-        if (!passwordRegex.test(password)) {
-            tempErrors = {
-                ...tempErrors,
-                password: "At least 8 characters long, one uppercase letter, one lowercase letter,  one number",
-            };
-        }
+        !validateEmail(email) &&
+            (tempErrors = { email: "Invalid email", ...tempErrors });
+        !validatePassword(password) &&
+            (tempErrors = { password: "Invalid password", ...tempErrors });
         setErrors(tempErrors);
+        return validateEmail(email) && validatePassword(password);
     };
+
+    const handleForm = async (event: any) => {
+        event.preventDefault();
+
+        if (!validateInputs(email, password)) return;
+
+        const { result, error } = await signIn(email, password);
+
+        if (error) {
+            setFirebaseErrors(error);
+            return console.log(error);
+        }
+
+        // else successful
+        console.log(result);
+        return router.push("/login");
+    };
+
+    useEffect(() => {
+        console.log(errors);
+    }, [errors]);
     return (
         <>
-            <div className="phone:w-8/12 tablet:w-3/6 laptop:w-4/12 desktop:w-1/4 flex flex-col gap-2 justify-center items-center">
+            <form
+                onSubmit={handleForm}
+                className="phone:w-8/12 tablet:w-3/6 laptop:w-4/12 desktop:w-1/4 flex flex-col gap-2 justify-center items-center"
+            >
                 <TextInput
                     placeholder="Email"
                     label="Email"
@@ -45,15 +70,17 @@ function LoginForm() {
                     size="md"
                     error={errors.email}
                     value={email}
-                    onChange={handleEmail}
+                    type="email"
+                    onChange={(event) => setEmail(event.target.value)}
                 />
-                <PasswordInput
+                <TextInput
                     placeholder="Password"
+                    type="password"
                     label="Password"
                     error={errors.password}
                     withAsterisk
                     value={password}
-                    onChange={handlePassword}
+                    onChange={(event) => setPassword(event.target.value)}
                     styles={{ label: { color: "white" } }}
                     className="font-ibm w-full"
                     size="md"
@@ -76,15 +103,15 @@ function LoginForm() {
                 </div>
                 <Button
                     radius="lg"
+                    type="submit"
                     size="md"
                     uppercase
                     color="hover:text-blue-400 ease-in-out"
                     className="bg-blue-600  font-ibm w-1/2 mt-6"
-                    onClick={handleLogin}
                 >
                     Login
                 </Button>
-            </div>
+            </form>
         </>
     );
 }
