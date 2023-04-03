@@ -11,7 +11,7 @@ module.exports = {
         extend: {
             backgroundImage: {
                 "login-pattern":
-                    "url('https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80')",
+                    "url('https://cdn.discordapp.com/attachments/1092390790162038844/1092506289998938213/backgrDreaptaSus.png')",
             },
             fontFamily: {
                 'sans': 'Helvetica, Arial, sans-serif',
