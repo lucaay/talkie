@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 
 function LoginForm() {
-    const [errors, setErrors] = useState<{password: string, email: string}>({ password: "" , email:""});
+    const [errors, setErrors] = useState<{password?: string, email?: string}>({ password: "" , email:""});
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
 
@@ -18,16 +18,17 @@ function LoginForm() {
     const handleLogin = () => {
         let tempErrors: {} = {};
         const emailRegex = /^\S+@\S+\.\S+$/;
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
         if (!emailRegex.test(email)) {
             tempErrors = {
                 ...tempErrors,
                 email: "Introduceti un email valid.",
             };
         }
-        if (password.length < 6) {
+        if (!passwordRegex.test(password)) {
             tempErrors = {
                 ...tempErrors,
-                password: "Parola trebuie sa contina cel putin 6 caractere.",
+                password: "At least 8 characters long, one uppercase letter, one lowercase letter,  one number",
             };
         }
         setErrors(tempErrors);
