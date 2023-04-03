@@ -61,7 +61,7 @@ const RegisterForm = () => {
                 onChange={setBirthDate}
                 styles={{
                     label: { color: "white" },
-                    wrapper: { "background-color": "white", borderRadius: 10 },
+                    wrapper: { "backgroundColor": "white", borderRadius: 10 },
                 }}
                 variant="filled"
                 className="font-ibm w-full"
