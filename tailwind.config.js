@@ -15,7 +15,9 @@ module.exports = {
             },
             fontFamily: {
                 'sans': 'Helvetica, Arial, sans-serif',
-                'ibm': "Montserrat, sans-serif"
+                'ibm': "Montserrat, sans-serif",
+                'fira':"Fira Sans, sans-serif",
+                'jose':'Josefin Sons, sans-serif'
               }
         },
         screens: {

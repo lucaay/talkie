@@ -4,21 +4,34 @@ import React, { useEffect, useState } from "react";
 
 
 function LoginForm() {
-    const [errors, setErrors] = useState({ password: "" });
+    const [errors, setErrors] = useState<{password: string, email: string}>({ password: "" , email:""});
     const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
 
     const handlePassword = (e: any) => {
         setPassword(e.target.value);
     };
-
-    const handleLogin = () => {
-        if (password.length < 6) {
-            setErrors({
-                password: "Parola trebuie sa contina minim 6 caractere",
-            });
-        }
+    const handleEmail = (e: any) => {
+        setEmail(e.target.value);
     };
 
+    const handleLogin = () => {
+        let tempErrors: {} = {};
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(email)) {
+            tempErrors = {
+                ...tempErrors,
+                email: "Introduceti un email valid.",
+            };
+        }
+        if (password.length < 6) {
+            tempErrors = {
+                ...tempErrors,
+                password: "Parola trebuie sa contina cel putin 6 caractere.",
+            };
+        }
+        setErrors(tempErrors);
+    };
     return (
         <>
             <div className="phone:w-8/12 tablet:w-3/6 laptop:w-4/12 desktop:w-1/4 flex flex-col gap-2 justify-center items-center">
@@ -27,8 +40,11 @@ function LoginForm() {
                     label="Email"
                     withAsterisk
                     className="font-ibm w-full"
-                    styles={{label:{color:'white'}}}
+                    styles={{ label: { color: "white" } }}
                     size="md"
+                    error={errors.email}
+                    value={email}
+                    onChange={handleEmail}
                 />
                 <PasswordInput
                     placeholder="Password"
@@ -37,17 +53,26 @@ function LoginForm() {
                     withAsterisk
                     value={password}
                     onChange={handlePassword}
-                    styles={{label:{color:'white'}}}
+                    styles={{ label: { color: "white" } }}
                     className="font-ibm w-full"
                     size="md"
                 />
-                <Link
-                    href="/forgot-password"
-                    className="text-start hover:text-gray-300 ease-in-out text-white font-ibm w-full"
-                >
-                    {" "}
-                    Forgot your password?{" "}
-                </Link>
+                <div className="flex flex-row justify-between w-full">
+                    <Link
+                        href="/forgot-password"
+                        className="text-start hover:text-gray-300 ease-in-out text-white font-ibm w-full"
+                    >
+                        {" "}
+                        Forgot your password?{" "}
+                    </Link>
+                    <Link
+                        href="/register"
+                        className="text-right hover:text-gray-300 ease-in-out text-white font-ibm w-full"
+                    >
+                        {" "}
+                        Sign Up!{" "}
+                    </Link>
+                </div>
                 <Button
                     radius="lg"
                     size="md"
