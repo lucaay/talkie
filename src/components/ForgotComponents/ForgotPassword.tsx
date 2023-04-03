@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 
 function ForgotPasswordForm() {
-    const [errors, setErrors] = useState<{password: string, email: string}>({ password: "" , email:""});
+    const [errors, setErrors] = useState<{password?: string, email?: string}>({ password: "" , email:""});
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
 
