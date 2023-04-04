@@ -27,7 +27,7 @@ export default function App(props: AppProps) {
                 <Notifications />
                 <AuthContextProvider>
                     <Component {...pageProps} />
-                    <p className="absolute right-1 flex flex-row items-center text-white bottom-1 text-sm ">
+                    <p className="absolute right-1 flex flex-row items-center text-white top-1 text-sm ">
                         Powered by
                         <LogoSneaky className="w-10 h-10" />
                     </p>
