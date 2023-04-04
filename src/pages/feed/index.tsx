@@ -6,10 +6,12 @@ import React from "react";
 import router from "next/router";
 import MessageTab from "@/components/FeedComponents/MessageTab/MessageTab";
 import { useAuth, useLogout } from "@/hooks/auth";
+import { usePosts } from "@/hooks/posts";
 
 const Feed = () => {
     const { logout, isLoading } = useLogout();
     const { user, isLoading: authLoading } = useAuth();
+    const { posts, isLoading: isLoadingPosts } = usePosts();
     return (
         <div className="bg-login-pattern bg-cover w-auto h-screen flex flex-row items-start justify-start gap-2 pt-4 pl-4">
             <div className="flex flex-col items-center justify-center gap-4 h-full">
@@ -29,7 +31,11 @@ const Feed = () => {
             </div>
             <div className="flex flex-col items-start justify-start gap-4 h-full">
                 <PostCard className="" />
-                <CardsWrapper className="" />
+                <CardsWrapper
+                    posts={posts}
+                    isLoadingPosts={isLoadingPosts}
+                    className=""
+                />
             </div>
             <MessageTab className="absolute right-10 bottom-0 w-[25%]" />
         </div>

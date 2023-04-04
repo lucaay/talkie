@@ -9,11 +9,14 @@ const x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const CardsWrapper = ({
     className,
     scrollHeight,
+    posts,
+    isLoadingPosts,
 }: {
     className?: string;
     scrollHeight?: number;
+    posts: any;
+    isLoadingPosts: boolean;
 }) => {
-    const { posts, isLoading: isLoadingPosts } = usePosts();
     const [isLoading, setIsLoading] = useState(false);
     const { users, isLoading: isLoadingUsers } = useUsers();
 
