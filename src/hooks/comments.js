@@ -61,7 +61,6 @@ export function useComments(postID) {
 
 export function useDeleteComment(id) {
     const [isLoading, setLoading] = useState(false);
-    const toast = useToast();
 
     async function deleteComment() {
         const res = window.confirm(

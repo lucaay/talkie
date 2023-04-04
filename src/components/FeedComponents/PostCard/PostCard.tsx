@@ -44,7 +44,6 @@ const PostCard = ({ className }: { className?: string }) => {
             </div>
             <div className="flex w-full gap-3 items-center flex-row justify-between pt-2 ">
                 <div className="text-white flex flex-row gap-2 items-center hover:text-red-500 cursor-pointer w-full">
-                    <input type="file" className="" />
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

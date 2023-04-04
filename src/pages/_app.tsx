@@ -5,9 +5,21 @@ import "../styles/globals.css";
 import LogoSneaky from "@/components/LogoSneaky";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { Notifications } from "@mantine/notifications";
+import { useEffect } from "react";
+import router from "next/router";
+import { useAuth } from "@/hooks/auth";
 
 export default function App(props: AppProps) {
     const { Component, pageProps } = props;
+
+    const { user } = useAuth();
+
+    useEffect(() => {
+        // Redirect to login page if user is not authenticated
+        if (user === null) {
+            router.push("/login");
+        }
+    }, [user]);
 
     return (
         <>
