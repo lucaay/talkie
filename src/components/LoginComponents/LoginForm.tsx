@@ -58,7 +58,7 @@ function LoginForm() {
             color: "green",
             message: "Loggin successful",
             autoClose: 1000,
-            onClose: () => router.push("/profile"),
+            onClose: () => router.push("/feed"),
         });
         // else successful
         console.log(result);

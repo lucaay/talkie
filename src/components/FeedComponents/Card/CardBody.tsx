@@ -5,7 +5,7 @@ const CardBody = (props) => {
     return (
         <div className="w-full">
             <Image src={props.imageUrl} alt="" className="w-full mx-auto " />
-            <p className="text-white py-2 ml-4">{props.text}</p>
+            <p className="text-white text-sm py-2 ml-4">{props.text}</p>
         </div>
     );
 };

@@ -19,7 +19,7 @@ const Card = () => {
         console.log("toggle drop");
     };
     return (
-        <div className="w-[600px] bg-slate-900 h-auto rounded-2xl overflow-hidden shadow-3xl">
+        <div className="w-[500px] bg-slate-900 h-auto rounded-2xl overflow-hidden shadow-3xl">
             <div className=" w-full flex flex-row justify-between items-center gap-6 relative">
                 <CardAvatar image={Image} />
                 <CardHeader

@@ -2,9 +2,9 @@ import React from "react";
 import ProfileImage from "../../../assets/download.png";
 import Image from "next/image";
 import { Button, Textarea, TextInput } from "@mantine/core";
-const PostCard = () => {
+const PostCard = ({ className }: { className?: string }) => {
     return (
-        <div className="w-[600px] bg-slate-900  py-2 px-6 rounded-2xl pb-5 pt-5">
+        <div className={`w-[500px] bg-slate-900  py-2 px-6 rounded-2xl pb-5 pt-5 ${className}`}>
             <div className="flex w-full h-auto justify-center items-center gap-5">
                 <Image
                     className="avatar img-fluid w-12 rounded-full my-3"

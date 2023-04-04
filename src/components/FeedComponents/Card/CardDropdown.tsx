@@ -20,7 +20,7 @@ const CardDropdown = ({
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="h-6 w-6 ml-6 cursor-pointer"
+                className="h-4 w-4 ml-6 cursor-pointer"
                 onClick={toggle}
             >
                 <path
@@ -31,7 +31,7 @@ const CardDropdown = ({
             </svg>
 
             {dropdown && (
-                <div className="w-24 text-blue-600 bg-slate-950 flex flex-col gap-2 absolute top-6 right-0 rounded-xl rounded-tr-none overflow-hidden pb-2">
+                <div className="w-24 text-blue-600 bg-slate-950 flex flex-col gap-2 absolute top-4 right-0 rounded-xl rounded-tr-none overflow-hidden pb-2">
                     <p className="hover:bg-gray-300 text-center cursor-pointer">Link One</p>
                     <p className="hover:bg-gray-300 text-center cursor-pointer">Link Two</p>
                     <p className="hover:bg-gray-300 text-center cursor-pointer">Link Three</p>
