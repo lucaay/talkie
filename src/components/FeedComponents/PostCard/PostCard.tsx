@@ -6,89 +6,30 @@ import { notifications } from "@mantine/notifications";
 import router from "next/router";
 import { getUserEmail } from "@/firebase/functions/getCurrentUserEmail";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { useAuth } from "../../../hooks/auth";
+import { useAddPost } from "../../../hooks/posts";
+import { useForm } from "react-hook-form";
 
 const PostCard = ({ className }: { className?: string }) => {
-    const email = getUserEmail();
-    const [firebaseErrors, setFirebaseErrors] = useState<{
-        [key: string]: any;
-    }>({});
-    const [text, setText] = useState<string>("");
-    const [image, setImage] = useState<File | null>(null);
-    const handleForm = async (event: any) => {
-        event.preventDefault();
+    const { register, handleSubmit, reset } = useForm();
+    const { addPost, isLoading: addingPost } = useAddPost();
+    const { user, isLoading: authLoading } = useAuth();
 
-        const storage = getStorage();
-        const storageRef = ref(
-            storage,
-            "posts/" + new Date().getTime() + "-" + image.name
-        );
-
-        await uploadBytes(storageRef, image);
-
-        const downloadURL = await getDownloadURL(storageRef);
-
-        const body = JSON.stringify({
-            email,
-            text,
-            image: downloadURL,
+    function handleAddPost(data: any) {
+        addPost({
+            uid: user?.uid,
+            text: data.text,
+            date: new Date(),
         });
-
-        console.log(body);
-
-        // // auth info realtime database
-        // let url =
-        //     "https://talkie-9443e-default-rtdb.europe-west1.firebasedatabase.app/posts.json";
-        // fetch(url, {
-        //     method: "POST",
-        //     body: body,
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        // })
-        //     .then((res) => {
-        //         if (res.ok) {
-        //             return res.json();
-        //         } else {
-        //             return res.json().then((data) => {
-        //                 let errorMessage = "Înregistrare eșuată!";
-        //                 throw new Error(errorMessage);
-        //             });
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         alert(err.message);
-        //     });
-
-        // const { result, error };
-
-        // if (error) {
-        //     setFirebaseErrors(error);
-        //     notifications.show({
-        //         title: "Error",
-        //         color: "red",
-        //         message: "Sign up failed",
-        //         autoClose: 3000,
-        //     });
-        //     return console.log(error);
-        // }
-        // notifications.show({
-        //     title: "Success",
-        //     color: "green",
-        //     message: "Sign up successful",
-        //     autoClose: 1000,
-        //     onClose: () => router.push("/login"),
-        // });
-        // // else successful
-        // console.log(result);
-    };
+        reset();
+    }
 
     const handleImage = (event: any) => {
-        setImage(event.target.files[0]);
         console.log(event.target.files[0]);
     };
     return (
         <form
-            onSubmit={handleForm}
+            onSubmit={handleSubmit(handleAddPost)}
             className={`w-[500px] bg-slate-900  py-2 px-6 rounded-2xl pb-5 pt-5 ${className}`}
         >
             <div className="flex w-full h-auto justify-center items-center gap-5">
@@ -104,19 +45,13 @@ const PostCard = ({ className }: { className?: string }) => {
                     required
                     size="lg"
                     autosize
-                    value={text}
-                    onChange={(e) => setText(e.currentTarget.value)}
                     className="w-full"
+                    {...register("text", { required: true })}
                 />
             </div>
             <div className="flex w-full gap-3 items-center flex-row justify-between pt-2 ">
                 <div className="text-white flex flex-row gap-2 items-center hover:text-red-500 cursor-pointer w-full">
-                    <input
-                        type="file"
-                        onClick={handleImage}
-                        className=""
-                        value={image || ""}
-                    />
+                    <input type="file" onClick={handleImage} className="" />
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

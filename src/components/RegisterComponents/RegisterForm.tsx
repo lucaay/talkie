@@ -6,107 +6,31 @@ import { DatePickerInput } from "@mantine/dates";
 import signUp from "@/firebase/auth/signup";
 import router from "next/router";
 import { notifications } from "@mantine/notifications";
+import { useRegister } from "@/hooks/auth";
+import { useForm } from "react-hook-form";
+import isEmailExists from "@/utils/isEmailExists";
+import { emailValidate, passwordValidate } from "@/utils/form-validate";
 
 const RegisterForm = () => {
-    const [birthDate, setBirthDate] = useState<Date | null>(null);
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [firstName, setFirstName] = useState<string>("");
-    const [lastName, setLastName] = useState<string>("");
-    const [gender, setGender] = useState<string>("");
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [errors, setErrors] = useState<{
-        email?: string;
-        password?: string;
-    }>({});
-    const [firebaseErrors, setFirebaseErrors] = useState<{
-        [key: string]: any;
-    }>({});
+    const [birthdate, setBirthdate] = useState<Date | null>(null);
+    const [gender, setGender] = useState<string | null>(null);
+    const { register: signup, isLoading } = useRegister();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
 
-    const validateEmail = (email: string) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email) && email.length > 0;
-    };
-    const validatePassword = (password: string) => {
-        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-        return regex.test(password);
-    };
-
-    const validateInputs = (email: string, password: string) => {
-        let tempErrors: {} = {};
-        !validateEmail(email) &&
-            (tempErrors = { email: "Invalid email", ...tempErrors });
-        !validatePassword(password) &&
-            (tempErrors = { password: "Invalid password", ...tempErrors });
-        setErrors(tempErrors);
-        return validateEmail(email) && validatePassword(password);
-    };
-
-    const handleForm = async (event: any) => {
-        event.preventDefault();
-
-        if (!validateInputs(email, password)) return;
-
-        const body = JSON.stringify({
-            firstName,
-            lastName,
-            email,
-            birthDate,
-            gender,
+    async function handleRegister(data: any) {
+        signup({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            password: data.password,
+            birthdate: birthdate,
+            gender: gender,
         });
-        setIsLoading(true);
-
-        // auth info realtime database
-        let url =
-            "https://talkie-9443e-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-        fetch(url, {
-            method: "POST",
-            body: body,
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((res) => {
-                setIsLoading(false);
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    return res.json().then((data) => {
-                        let errorMessage = "Înregistrare eșuată!";
-                        throw new Error(errorMessage);
-                    });
-                }
-            })
-            .catch((err) => {
-                alert(err.message);
-            });
-
-        const { result, error } = await signUp(email, password);
-
-        if (error) {
-            setFirebaseErrors(error);
-            notifications.show({
-                title: "Error",
-                color: "red",
-                message: "Sign up failed",
-                autoClose: 3000,
-            });
-            return console.log(error);
-        }
-        notifications.show({
-            title: "Success",
-            color: "green",
-            message: "Sign up successful",
-            autoClose: 1000,
-            onClose: () => router.push("/login"),
-        });
-        // else successful
-        console.log(result);
-    };
-
-    useEffect(() => {
-        console.log(errors);
-    }, [errors]);
+    }
 
     return (
         <div className="flex flex-col gap-2 justify-center items-center phone:justify-end phone: h-full phone:pb-10 phone:w-10/12 phone:mx-auto tablet:ml-20 tablet:w-3/6 laptop:w-2/6 laptop:pt-28 laptop:justify-center">
@@ -126,7 +50,7 @@ const RegisterForm = () => {
                     </Link>
                 </p>
             </div>
-            <form onSubmit={handleForm}>
+            <form onSubmit={handleSubmit(handleRegister)}>
                 <div className="flex flex-row gap-5 w-full">
                     <TextInput
                         placeholder="First name"
@@ -135,8 +59,8 @@ const RegisterForm = () => {
                         styles={{ label: { color: "white" } }}
                         className="font-ibm w-full"
                         required
-                        value={firstName}
-                        onChange={(event) => setFirstName(event.target.value)}
+                        error={errors.firstName?.message as string}
+                        {...register("firstName")}
                     />
                     <TextInput
                         placeholder="Last name"
@@ -145,8 +69,8 @@ const RegisterForm = () => {
                         styles={{ label: { color: "white" } }}
                         className="font-ibm w-full"
                         required
-                        value={lastName}
-                        onChange={(event) => setLastName(event.target.value)}
+                        error={errors.lastName?.message as string}
+                        {...register("lastName")}
                     />
                 </div>
                 <TextInput
@@ -156,9 +80,8 @@ const RegisterForm = () => {
                     type="email"
                     styles={{ label: { color: "white" } }}
                     className="font-ibm w-full"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    error={errors.email}
+                    error={errors.email?.message as string}
+                    {...register("email", emailValidate)}
                 />
                 <TextInput
                     placeholder="Password"
@@ -166,17 +89,14 @@ const RegisterForm = () => {
                     label="Password"
                     radius="md"
                     styles={{ label: { color: "white" } }}
+                    error={errors.password?.message as string}
                     className="font-ibm w-full"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    error={errors.password}
+                    {...register("password", passwordValidate)}
                 />
                 <div className="flex flex-row gap-5 w-full items-end">
                     <DatePickerInput
                         label="Pick date"
                         placeholder="Pick birthday"
-                        value={birthDate}
-                        onChange={setBirthDate}
                         styles={{
                             label: { color: "white" },
                             wrapper: {
@@ -187,6 +107,8 @@ const RegisterForm = () => {
                         variant="filled"
                         className="font-ibm w-full"
                         required
+                        value={birthdate}
+                        onChange={(value) => setBirthdate(value)}
                     />
                     <Select
                         data={["Male", "Female"]}
@@ -194,7 +116,7 @@ const RegisterForm = () => {
                         radius="md"
                         required
                         value={gender}
-                        onChange={(value) => value && setGender(value)}
+                        onChange={(value) => setGender(value)}
                     />
                 </div>
                 <Checkbox

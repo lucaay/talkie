@@ -5,72 +5,29 @@ import router from "next/router";
 import signIn from "@/firebase/auth/signin";
 import React, { useEffect, useState } from "react";
 import { notifications } from "@mantine/notifications";
+import { useLogin } from "@/hooks/auth";
+import { useForm } from "react-hook-form";
+import { emailValidate, passwordValidate } from "@/utils/form-validate";
 
 function LoginForm() {
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [errors, setErrors] = useState<{
-        email?: string;
-        password?: string;
-    }>({});
-    const [firebaseErrors, setFirebaseErrors] = useState<{
-        [key: string]: any;
-    }>({});
+    const { login, isLoading } = useLogin();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
 
-    const validateEmail = (email: string) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email) && email.length > 0;
-    };
-    const validatePassword = (password: string) => {
-        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-        return regex.test(password);
-    };
-
-    const validateInputs = (email: string, password: string) => {
-        let tempErrors: {} = {};
-        !validateEmail(email) &&
-            (tempErrors = { email: "Invalid email", ...tempErrors });
-        !validatePassword(password) &&
-            (tempErrors = { password: "Invalid password", ...tempErrors });
-        setErrors(tempErrors);
-        return validateEmail(email) && validatePassword(password);
-    };
-
-    const handleForm = async (event: any) => {
-        event.preventDefault();
-
-        if (!validateInputs(email, password)) return;
-
-        const { result, error } = await signIn(email, password);
-
-        if (error) {
-            setFirebaseErrors(error);
-            notifications.show({
-                title: "Error",
-                color: "red",
-                message: "Loggin failed",
-                autoClose: 3000,
-            });
-            return console.log(error);
-        }
-        notifications.show({
-            title: "Success",
-            color: "green",
-            message: "Loggin successful",
-            autoClose: 1000,
-            onClose: () => router.push("/feed"),
+    async function handleLogin(data: any) {
+        login({
+            email: data.email,
+            password: data.password,
         });
-        // else successful
-        console.log(result);
-    };
+    }
 
-    useEffect(() => {
-        console.log(errors);
-    }, [errors]);
     return (
         <>
             <form
-                onSubmit={handleForm}
+                onSubmit={handleSubmit(handleLogin)}
                 className="phone:w-8/12 tablet:w-3/6 laptop:w-4/12 desktop:w-1/4 flex flex-col gap-2 justify-center items-center"
             >
                 <TextInput
@@ -80,22 +37,20 @@ function LoginForm() {
                     className="font-ibm w-full"
                     styles={{ label: { color: "white" } }}
                     size="md"
-                    error={errors.email}
-                    value={email}
+                    error={errors.email?.message}
                     type="email"
-                    onChange={(event) => setEmail(event.target.value)}
+                    {...register("email", emailValidate)}
                 />
                 <TextInput
                     placeholder="Password"
                     type="password"
                     label="Password"
-                    error={errors.password}
+                    error={errors.password?.message}
                     withAsterisk
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
                     styles={{ label: { color: "white" } }}
                     className="font-ibm w-full"
                     size="md"
+                    {...register("password", passwordValidate)}
                 />
                 <div className="flex flex-row justify-between w-full">
                     <Link

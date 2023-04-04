@@ -3,11 +3,12 @@ import FrientsWrapper from "@/components/FeedComponents/Friends/FrientsWrapper";
 import PostCard from "@/components/FeedComponents/PostCard/PostCard";
 import { Button } from "@mantine/core";
 import React from "react";
-import logOut from "@/firebase/auth/logOut";
 import router from "next/router";
 import MessageTab from "@/components/FeedComponents/MessageTab/MessageTab";
+import { useLogout } from "@/hooks/auth";
 
-const feed = () => {
+const Feed = () => {
+    const { logout, isLoading } = useLogout();
     return (
         <div className="bg-login-pattern bg-cover w-auto h-screen flex flex-row items-start justify-start gap-2 pt-4 pl-4">
             <div className="flex flex-col items-center justify-center gap-4 h-full">
@@ -19,9 +20,9 @@ const feed = () => {
                     >
                         My profile
                     </Button>
-                    <Button onClick={logOut} className="bg-blue-700 w-full">
+                    <Button onClick={logout} className="bg-blue-700 w-full">
                         Sign Out
-                    </Button>
+                    </Button>x
                 </div>
             </div>
             <div className="flex flex-col items-start justify-start gap-4 h-full">
@@ -33,4 +34,4 @@ const feed = () => {
     );
 };
 
-export default feed;
+export default Feed;

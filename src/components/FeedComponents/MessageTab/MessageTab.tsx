@@ -26,7 +26,7 @@ const MessageTab = ({ className }: { className?: string }) => {
 
     return (
         <div
-            className={`w-full h-auto bg-slate-900 rounded-t-3xl flex flex-col justify-around overflow-hidden ${className}`}
+            className={`h-auto bg-slate-900 rounded-t-3xl flex flex-col justify-around overflow-hidden ${className}`}
         >
             {isOpenMessagesList && (
                 <ScrollArea className="border-b-2">
