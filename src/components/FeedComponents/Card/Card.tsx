@@ -7,7 +7,7 @@ import CardHeader from "./CardHeader";
 import CardBody from "./CardBody";
 import CardInteractions from "./CardInteractions/CardInteractions";
 
-interface CardInterface {
+export interface CardInterface {
     name: string;
 }
 
