@@ -1,11 +1,11 @@
 import React from "react";
 import RegisterForm from "@/components/RegisterComponents/RegisterForm";
-const index = () => {
+const Register = () => {
     return (
         <div className="bg-login-pattern bg-cover w-full h-screen">
-            <RegisterForm/>
-        </div>
+            <RegisterForm />
+        </div> 
     );
 };
 
-export default index;
+export default Register;
