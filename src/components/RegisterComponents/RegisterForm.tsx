@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { DatePickerInput } from "@mantine/dates";
 import signUp from "@/firebase/auth/signup";
 import router from "next/router";
+import { notifications } from "@mantine/notifications";
 
 const RegisterForm = () => {
     const [birthDate, setBirthDate] = useState<Date | null>(null);
@@ -85,11 +86,23 @@ const RegisterForm = () => {
 
         if (error) {
             setFirebaseErrors(error);
+            notifications.show({
+                title: "Error",
+                color: "red",
+                message: "Sign up failed",
+                autoClose: 3000,
+            });
             return console.log(error);
-            // else successful
-            console.log(result);
-            return router.push("/login");
         }
+        notifications.show({
+            title: "Success",
+            color: "green",
+            message: "Sign up successful",
+            autoClose: 1000,
+            onClose: () => router.push("/login"),
+        });
+        // else successful
+        console.log(result);
     };
 
     useEffect(() => {

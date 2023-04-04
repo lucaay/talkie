@@ -4,6 +4,7 @@ import { MantineProvider } from "@mantine/core";
 import "../styles/globals.css";
 import LogoSneaky from "@/components/LogoSneaky";
 import { AuthContextProvider } from "@/context/AuthContext";
+import { Notifications } from "@mantine/notifications";
 
 export default function App(props: AppProps) {
     const { Component, pageProps } = props;
@@ -23,6 +24,7 @@ export default function App(props: AppProps) {
             </Head>
 
             <MantineProvider withGlobalStyles withNormalizeCSS>
+                <Notifications />
                 <AuthContextProvider>
                     <Component {...pageProps} />
                     <p className="absolute right-1 flex flex-row items-center text-white bottom-1 text-sm ">

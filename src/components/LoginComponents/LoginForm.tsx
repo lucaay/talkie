@@ -4,6 +4,7 @@ import Link from "next/link";
 import router from "next/router";
 import signIn from "@/firebase/auth/signin";
 import React, { useEffect, useState } from "react";
+import { notifications } from "@mantine/notifications";
 
 function LoginForm() {
     const [email, setEmail] = useState<string>("");
@@ -44,12 +45,23 @@ function LoginForm() {
 
         if (error) {
             setFirebaseErrors(error);
+            notifications.show({
+                title: "Error",
+                color: "red",
+                message: "Loggin failed",
+                autoClose: 3000,
+            });
             return console.log(error);
         }
-
+        notifications.show({
+            title: "Success",
+            color: "green",
+            message: "Loggin successful",
+            autoClose: 1000,
+            onClose: () => router.push("/profile"),
+        });
         // else successful
         console.log(result);
-        return router.push("/login");
     };
 
     useEffect(() => {
