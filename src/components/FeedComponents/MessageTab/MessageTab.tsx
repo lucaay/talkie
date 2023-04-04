@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import ProfileImageMessage from "../../../assets/download.png";
-import Image from "next/image";
 import { Button, ScrollArea } from "@mantine/core";
+import MessageCard from "./MessageCard";
+import Image from "next/image";
+import ProfileImageMessage from "../../../assets/download.png";
 
-const MessageTab = () => {
+const MessageTab = ({ className }: { className?: string }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     useEffect(() => {
@@ -11,24 +12,13 @@ const MessageTab = () => {
     }, [isOpen]);
 
     return (
-        <div className="w-full h-auto bg-slate-900 rounded-t-3xl flex flex-col justify-around overflow-hidden ">
+        <div
+            className={`w-full h-auto bg-slate-900 rounded-t-3xl flex flex-col justify-around overflow-hidden ${className}`}
+        >
             {isOpen && (
                 <ScrollArea className="border-b-2">
-                    <div className="w-full h-96 p-4 flex flex-col items-start justify-start">
-                        <div className="flex flex-row gap-5 justify-between items-center w-full rounded-lg bg-slate-800 hover:bg-slate-600 pr-3 pl-3">
-                            <Image
-                                className="avatar img-fluid w-12 rounded-full my-3"
-                                src={ProfileImageMessage}
-                                alt="Avatar"
-                            />
-                            <div className="flex flex-col w-full">
-                                <p className="text-white">Niptu Diptulai</p>
-                                <p className="text-white"> mesaj</p>
-                            </div>
-                            <p className="text-white text-xs whitespace-nowrap">
-                                4 Aprilie
-                            </p>
-                        </div>
+                    <div className="w-full h-[350px] p-4 flex flex-col items-start justify-start">
+                        <MessageCard></MessageCard>
                     </div>
                 </ScrollArea>
             )}
@@ -50,7 +40,7 @@ const MessageTab = () => {
                     stroke="currentColor"
                     className={`w-6 h-6 text-white ${
                         isOpen && "rotate-180"
-                    } ease-in-out duration-1000`}
+                    } ease-in-out duration-300`}
                 >
                     <path
                         strokeLinecap="round"

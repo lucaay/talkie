@@ -12,7 +12,7 @@ const Profile = () => {
                 birthdate="10 ianuarie"
                 gender="male"
             />
-            <CardsWrapper className="absolute right-20 top-[40%]" />
+            <CardsWrapper className="absolute right-28 top-[37.5%]" scrollHeight={400} />
         </div>
     );
 };

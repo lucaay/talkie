@@ -5,6 +5,7 @@ import { Button } from "@mantine/core";
 import React from "react";
 import logOut from "@/firebase/auth/logOut";
 import router from "next/router";
+import MessageTab from "@/components/FeedComponents/MessageTab/MessageTab";
 
 const feed = () => {
     return (
@@ -27,6 +28,7 @@ const feed = () => {
                 <PostCard className="" />
                 <CardsWrapper className="" />
             </div>
+            <MessageTab className="absolute right-10 bottom-0 w-[25%]" />
         </div>
     );
 };
