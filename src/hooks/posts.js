@@ -73,6 +73,21 @@ export function useToggleLike({ id, isLiked, uid }) {
     return { toggleLike, isLoading };
 }
 
+export function useToggleCommentLike({ id, isLiked, uid }) {
+    const [isLoading, setLoading] = useState(false);
+
+    async function toggleCommentLike() {
+        setLoading(true);
+        const docRef = doc(db, "comments", id);
+        await updateDoc(docRef, {
+            likes: isLiked ? arrayRemove(uid) : arrayUnion(uid),
+        });
+        setLoading(false);
+    }
+
+    return { toggleCommentLike, isLoading };
+}
+
 export function useDeletePost(id) {
     const [isLoading, setLoading] = useState(false);
     const toast = useToast();

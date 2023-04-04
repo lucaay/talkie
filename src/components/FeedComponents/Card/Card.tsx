@@ -6,34 +6,39 @@ import CardHeader from "./CardHeader";
 import CardBody from "./CardBody";
 import CardInteractions from "./CardInteractions/CardInteractions";
 import { DocumentData } from "firebase/firestore";
+import CommentsSection from "./CardComments/CommentsSection";
 
 const Card = ({
     post,
     user,
 }: {
-    post: DocumentData | undefined;
+    post: DocumentData;
     user: DocumentData | undefined;
 }) => {
+    const [commentsSection, setCommentsSection] = useState(false);
     return (
-        <div className="w-[500px] bg-slate-900 h-auto rounded-2xl overflow-hidden shadow-3xl">
-            <div className=" w-full flex flex-row justify-between items-center gap-6 relative">
-                <CardAvatar image={Image} />
-                <CardHeader
-                    firstName={user?.firstName}
-                    lastName={user?.lastName}
-                    date={
-                        new Date(post?.date).toLocaleDateString() +
-                        " " +
-                        new Date(post?.date).toLocaleTimeString()
-                    }
-                    userId={user?.id}
+        <div className="">
+            <div className={`w-[500px] bg-slate-900 h-auto overflow-hidden shadow-3xl ${commentsSection ? 'rounded-t-2xl' : 'rounded-2xl'}`}>
+                <div className=" w-full flex flex-row justify-between items-center gap-6 relative">
+                    <CardAvatar image={Image} />
+                    <CardHeader
+                        firstName={user?.firstName}
+                        lastName={user?.lastName}
+                        date={
+                            new Date(post?.date).toLocaleDateString() +
+                            " " +
+                            new Date(post?.date).toLocaleTimeString()
+                        }
+                        userId={user?.id}
+                    />
+                </div>
+                <CardBody text={post?.text} imageUrl={ImagePostare} />
+                <CardInteractions
+                    post={post}
+                    setCommentsSection={setCommentsSection}
                 />
             </div>
-            <CardBody
-                text={post?.text}
-                imageUrl={ImagePostare}
-            />
-            <CardInteractions post={post} />
+            {commentsSection && <CommentsSection postId={post?.id} />}
         </div>
     );
 };

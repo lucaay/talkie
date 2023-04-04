@@ -2,7 +2,7 @@ import React from "react";
 
 const CardShareButton = () => {
     return (
-        <div className=" h-full w-full border-r-2 border-gray-600 hover:text-red-400 flex gap-2 items-center justify-center cursor-pointer">
+        <div className=" h-full w-full hover:text-red-400 flex gap-2 items-center justify-center cursor-pointer">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

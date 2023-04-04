@@ -32,7 +32,7 @@ export function useAddComment({ postID, uid }) {
         const id = uuidv4();
         const date = Date.now();
         const docRef = doc(db, "comments", id);
-        await setDoc(docRef, { text, id, postID, date, uid });
+        await setDoc(docRef, { text, id, postID, date, uid, likes: [] });
 
         notifications.show({
             title: "Comment added",

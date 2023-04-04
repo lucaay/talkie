@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import CardLikeButton from "./CardLikeButton";
 import CardCommentsButton from "./CardCommentsButton";
 import CardShareButton from "./CardShareButton";
@@ -7,7 +7,13 @@ import { useAuth } from "@/hooks/auth";
 import { useToggleLike } from "@/hooks/posts";
 import { useComments } from "@/hooks/comments";
 
-const CardInteractions = ({ post }: { post: DocumentData }) => {
+const CardInteractions = ({
+    post,
+    setCommentsSection,
+}: {
+    post: DocumentData;
+    setCommentsSection: React.Dispatch<SetStateAction<boolean>>;
+}) => {
     const { id, likes, uid } = post;
     const { user, isLoading: userLoading } = useAuth();
     const isLiked = likes.includes(user?.uid);
@@ -22,7 +28,7 @@ const CardInteractions = ({ post }: { post: DocumentData }) => {
     const { comments, isLoading: commentsLoading } = useComments(id);
 
     const toggleComments = () => {
-        console.log("toggleed comments");
+        setCommentsSection((prev: boolean) => !prev);
     };
 
     return (
