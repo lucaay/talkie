@@ -1,10 +1,79 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProfileImage from "../../../assets/download.png";
 import Image from "next/image";
 import { Button, Textarea, TextInput } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import router from "next/router";
+import { getUserEmail } from "@/firebase/functions/getCurrentUserEmail";
+
 const PostCard = ({ className }: { className?: string }) => {
+    const email = getUserEmail();
+    const [firebaseErrors, setFirebaseErrors] = useState<{
+        [key: string]: any;
+    }>({});
+    const [text, setText] = useState<string>("");
+
+    const handleForm = async (event: any) => {
+        event.preventDefault();
+
+        const body = JSON.stringify({
+            email,
+            text,
+        });
+
+        console.log(body);
+
+        // // auth info realtime database
+        // let url =
+        //     "https://talkie-9443e-default-rtdb.europe-west1.firebasedatabase.app/posts.json";
+        // fetch(url, {
+        //     method: "POST",
+        //     body: body,
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        // })
+        //     .then((res) => {
+        //         if (res.ok) {
+        //             return res.json();
+        //         } else {
+        //             return res.json().then((data) => {
+        //                 let errorMessage = "Înregistrare eșuată!";
+        //                 throw new Error(errorMessage);
+        //             });
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         alert(err.message);
+        //     });
+
+        // const { result, error };
+
+        // if (error) {
+        //     setFirebaseErrors(error);
+        //     notifications.show({
+        //         title: "Error",
+        //         color: "red",
+        //         message: "Sign up failed",
+        //         autoClose: 3000,
+        //     });
+        //     return console.log(error);
+        // }
+        // notifications.show({
+        //     title: "Success",
+        //     color: "green",
+        //     message: "Sign up successful",
+        //     autoClose: 1000,
+        //     onClose: () => router.push("/login"),
+        // });
+        // // else successful
+        // console.log(result);
+    };
     return (
-        <div className={`w-[500px] bg-slate-900  py-2 px-6 rounded-2xl pb-5 pt-5 ${className}`}>
+        <form
+            onSubmit={handleForm}
+            className={`w-[500px] bg-slate-900  py-2 px-6 rounded-2xl pb-5 pt-5 ${className}`}
+        >
             <div className="flex w-full h-auto justify-center items-center gap-5">
                 <Image
                     className="avatar img-fluid w-12 rounded-full my-3"
@@ -18,6 +87,8 @@ const PostCard = ({ className }: { className?: string }) => {
                     required
                     size="lg"
                     autosize
+                    value={text}
+                    onChange={(e) => setText(e.currentTarget.value)}
                     className="w-full"
                 />
             </div>
@@ -40,6 +111,7 @@ const PostCard = ({ className }: { className?: string }) => {
                     Foto
                 </button>
                 <Button
+                    type="submit"
                     size="xs"
                     radius="lg"
                     uppercase
@@ -49,7 +121,7 @@ const PostCard = ({ className }: { className?: string }) => {
                     Post
                 </Button>
             </div>
-        </div>
+        </form>
     );
 };
 

@@ -48,7 +48,6 @@ const RegisterForm = () => {
         if (!validateInputs(email, password)) return;
 
         const body = JSON.stringify({
-            id: Math.random().toFixed(),
             firstName,
             lastName,
             email,
