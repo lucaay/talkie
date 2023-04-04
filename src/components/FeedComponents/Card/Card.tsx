@@ -23,8 +23,8 @@ const Card = () => {
             <div className=" w-full flex flex-row justify-between items-center gap-6 relative">
                 <CardAvatar image={Image} />
                 <CardHeader
-                    name="Nicu"
-                    username="nicu_dinu"
+                    firstName="Nicu"
+                    lastName="George"
                     date=" 10 Aprilie"
                 />
                 <CardDropdown dropdown={dropdown} toggle={toggleDropdown} />
