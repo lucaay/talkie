@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ProfileImage from "../../../assets/download.png";
 import Image from "next/image";
-import { Button, Textarea, TextInput } from "@mantine/core";
+import { Button, FileInput, Textarea, TextInput } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import router from "next/router";
 import { getUserEmail } from "@/firebase/functions/getCurrentUserEmail";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 const PostCard = ({ className }: { className?: string }) => {
     const email = getUserEmail();
@@ -12,13 +13,24 @@ const PostCard = ({ className }: { className?: string }) => {
         [key: string]: any;
     }>({});
     const [text, setText] = useState<string>("");
-
+    const [image, setImage] = useState<File | null>(null);
     const handleForm = async (event: any) => {
         event.preventDefault();
+
+        const storage = getStorage();
+        const storageRef = ref(
+            storage,
+            "posts/" + new Date().getTime() + "-" + image.name
+        );
+
+        await uploadBytes(storageRef, image);
+
+        const downloadURL = await getDownloadURL(storageRef);
 
         const body = JSON.stringify({
             email,
             text,
+            image: downloadURL,
         });
 
         console.log(body);
@@ -69,6 +81,11 @@ const PostCard = ({ className }: { className?: string }) => {
         // // else successful
         // console.log(result);
     };
+
+    const handleImage = (event: any) => {
+        setImage(event.target.files[0]);
+        console.log(event.target.files[0]);
+    };
     return (
         <form
             onSubmit={handleForm}
@@ -93,7 +110,13 @@ const PostCard = ({ className }: { className?: string }) => {
                 />
             </div>
             <div className="flex w-full gap-3 items-center flex-row justify-between pt-2 ">
-                <button className="text-white flex flex-row gap-2 items-center hover:text-red-500">
+                <div className="text-white flex flex-row gap-2 items-center hover:text-red-500 cursor-pointer w-full">
+                    <input
+                        type="file"
+                        onClick={handleImage}
+                        className=""
+                        value={image || ""}
+                    />
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -109,7 +132,7 @@ const PostCard = ({ className }: { className?: string }) => {
                         />
                     </svg>
                     Foto
-                </button>
+                </div>
                 <Button
                     type="submit"
                     size="xs"
