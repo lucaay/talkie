@@ -35,7 +35,7 @@ const Card = ({
                 text={post?.text}
                 imageUrl={ImagePostare}
             />
-            <CardInteractions />
+            <CardInteractions post={post} />
         </div>
     );
 };
