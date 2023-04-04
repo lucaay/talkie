@@ -12,7 +12,7 @@ const MessageCard = () => {
             />
             <div className="flex flex-col w-full">
                 <p className="text-white">Niptu Diptulai</p>
-                <p className="text-white"> mesaj</p>
+                <p className="text-white opacity-50"> mesaj</p>
             </div>
             <p className="text-white text-xs whitespace-nowrap">4 Aprilie</p>
         </div>

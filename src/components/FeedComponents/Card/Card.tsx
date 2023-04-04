@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import CardDropdown from "./CardDropdown";
 import CardAvatar from "./CardAvatar";
 import Image from "../../../assets/download.png";
 import ImagePostare from "../../../assets/cat.jpg";
@@ -12,12 +11,6 @@ export interface CardInterface {
 }
 
 const Card = () => {
-    const [dropdown, setDropdown] = useState<boolean>(false);
-
-    const toggleDropdown = () => {
-        setDropdown(!dropdown);
-        console.log("toggle drop");
-    };
     return (
         <div className="w-[500px] bg-slate-900 h-auto rounded-2xl overflow-hidden shadow-3xl">
             <div className=" w-full flex flex-row justify-between items-center gap-6 relative">
@@ -27,13 +20,12 @@ const Card = () => {
                     lastName="George"
                     date=" 10 Aprilie"
                 />
-                <CardDropdown dropdown={dropdown} toggle={toggleDropdown} />
             </div>
             <CardBody
                 text="Lorem ipsum dolor amet tbh sriracha wayfarers, hoodie meditation chambray cupidatat kickstarter beard."
                 imageUrl={ImagePostare}
             />
-            <CardInteractions/>
+            <CardInteractions />
         </div>
     );
 };
