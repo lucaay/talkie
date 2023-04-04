@@ -9,7 +9,7 @@ const CardsWrapper = ({ className, scrollHeight }: { className?: string, scrollH
         <div
             className={`flex flex-col items-center justify-center rounded-2xl  overflow-hidden gap-10 ${className}`}
         >
-            <ScrollArea h={scrollHeight || 400}>
+            <ScrollArea h={scrollHeight || 900}>
                 <div className="flex flex-col items-center justify-center gap-10 ">
                     {x.map((item) => {
                         return <Card key={item} />;

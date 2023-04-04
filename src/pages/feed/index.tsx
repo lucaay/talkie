@@ -23,9 +23,9 @@ const feed = () => {
                     </Button>
                 </div>
             </div>
-            <div className="flex flex-col items-start justify-start gap-4">
+            <div className="flex flex-col items-start justify-start gap-4 h-full">
                 <PostCard className="" />
-                <CardsWrapper className="" scrollHeight={525} />
+                <CardsWrapper className="" />
             </div>
         </div>
     );
