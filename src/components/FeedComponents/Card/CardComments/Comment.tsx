@@ -6,15 +6,26 @@ import { Button } from "@mantine/core";
 import CardAvatar from "../CardAvatar";
 import { DocumentData } from "firebase/firestore";
 import { useUsers } from "@/hooks/users";
+import { useAuth } from "@/hooks/auth";
+import { useToggleCommentLike } from "@/hooks/posts";
 
 const Comment = ({ comment }: { comment: DocumentData }) => {
     const { users, isLoading: isLoadingUsers } = useUsers();
+    const { user: loggedUser, isLoading: userLoading } = useAuth();
 
+    const commentUser = users?.find((user) => user.id === comment.uid);
 
-
-    const user = users?.find((user) => user.id === comment.uid);
     const { id, likes, uid } = comment;
+    const isLiked = likes.includes(loggedUser?.uid);
 
+    const config = {
+        id,
+        isLiked,
+        uid: loggedUser?.uid,
+    };
+
+    const { toggleCommentLike, isLoading: commentLikeLoading } =
+        useToggleCommentLike(config);
     return (
         <div className="flex flex-row w-full items-center justify-start">
             <CardAvatar image={ProfileImageMsg} />
@@ -25,7 +36,7 @@ const Comment = ({ comment }: { comment: DocumentData }) => {
                             href="#"
                             className="text-white font-ibm text-[14px] "
                         >
-                            {user?.firstName} {user?.lastName}
+                            {commentUser?.firstName} {commentUser?.lastName}
                         </Link>
                         <p className="text-white font-ibm text-[12px]">
                             {comment.text}
@@ -38,9 +49,12 @@ const Comment = ({ comment }: { comment: DocumentData }) => {
                         radius="lg"
                         size="xs"
                         compact
-                        className="hover:text-gray font-ibm text-xs "
+                        className={`hover:text-gray font-ibm text-xs  ${
+                            isLiked ? "text-red-400" : "text-white"
+                        }`}
+                        onClick={() => toggleCommentLike()}
                     >
-                        Like
+                        {likes.length} Likes
                     </Button>
                     <Button
                         color="gray"

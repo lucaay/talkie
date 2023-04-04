@@ -9,7 +9,7 @@ export default function CommentList({ post }: { post: DocumentData }) {
     if (isLoading) return <p>Loading...</p>;
 
     return (
-        <>
+        <div className="w-full flex flex-col items-center justify-center gap-4 mt-6">
             {comments?.length === 0 ? (
                 <p>There is no comment</p>
             ) : (
@@ -17,6 +17,6 @@ export default function CommentList({ post }: { post: DocumentData }) {
                     <Comment key={comment.id} comment={comment} />
                 ))
             )}
-        </>
+        </div>
     );
 }
