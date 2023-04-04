@@ -14,11 +14,11 @@ const CardLikeButton = ({
             onClick={toggleLike}
             className={`h-full w-full border-r-2 border-gray-600 hover:text-red-400 flex gap-2 items-center justify-center cursor-pointer ${
                 isLiked ? "text-red-400" : "text-white"
-            }}`}
+            }`}
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                fill="none"
+                fill="full"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
