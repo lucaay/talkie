@@ -7,6 +7,7 @@ import CardBody from "./CardBody";
 import CardInteractions from "./CardInteractions/CardInteractions";
 import { DocumentData } from "firebase/firestore";
 import CommentsSection from "./CardComments/CommentsSection";
+import { useAuth } from "@/hooks/auth";
 
 const Card = ({
     post,
@@ -18,9 +19,13 @@ const Card = ({
     const [commentsSection, setCommentsSection] = useState(false);
     return (
         <div className="">
-            <div className={`w-[500px] bg-slate-900 h-auto overflow-hidden shadow-3xl ${commentsSection ? 'rounded-t-2xl' : 'rounded-2xl'}`}>
+            <div
+                className={`w-[500px] bg-slate-900 h-auto overflow-hidden shadow-3xl ${
+                    commentsSection ? "rounded-t-2xl" : "rounded-2xl"
+                }`}
+            >
                 <div className=" w-full flex flex-row justify-between items-center gap-6 relative">
-                    <CardAvatar image={Image} />
+                    <CardAvatar image={Image} userId={user?.id} />
                     <CardHeader
                         firstName={user?.firstName}
                         lastName={user?.lastName}

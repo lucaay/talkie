@@ -28,7 +28,7 @@ const Comment = ({ comment }: { comment: DocumentData }) => {
         useToggleCommentLike(config);
     return (
         <div className="flex flex-row w-full items-center justify-start">
-            <CardAvatar image={ProfileImageMsg} />
+            <CardAvatar image={ProfileImageMsg} userId={commentUser?.id} />
             <div className="flex flex-col w-full ml-2 mr-4">
                 <div className="flex flex-row gap-5 justify-between items-center w-full rounded-3xl bg-slate-800  pr-4 pl-4 py-2 ">
                     <div className="flex flex-col w-full">
@@ -49,7 +49,7 @@ const Comment = ({ comment }: { comment: DocumentData }) => {
                         radius="lg"
                         size="xs"
                         compact
-                        className={`hover:text-gray font-ibm text-xs  ${
+                        className={`hover:text-red-400 font-ibm text-xs  ${
                             isLiked ? "text-red-400" : "text-white"
                         }`}
                         onClick={() => toggleCommentLike()}
@@ -61,7 +61,7 @@ const Comment = ({ comment }: { comment: DocumentData }) => {
                         radius="lg"
                         size="xs"
                         compact
-                        className="hover:text-gray font-ibm text-xs"
+                        className="hover:text-red-400 font-ibm text-xs"
                     >
                         Reply
                     </Button>

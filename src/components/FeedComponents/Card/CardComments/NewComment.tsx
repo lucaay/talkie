@@ -24,7 +24,7 @@ export default function NewComment({ post }: { post: DocumentData }) {
 
     return (
         <div className="flex flex-row w-full items-center justify-start">
-            <CardAvatar image={AvatarImage}/>
+            <CardAvatar image={AvatarImage} userId={user?.uid} />
             <div className="w-full ml-2 mr-4">
                 <form
                     onSubmit={handleSubmit(handleAddComment)}
@@ -42,7 +42,7 @@ export default function NewComment({ post }: { post: DocumentData }) {
                     <Button
                         type="submit"
                         size="xs"
-                        radius='xl'
+                        radius="xl"
                         ml="auto"
                         className="bg-blue-500 hover:bg-blue-600 ml-4"
                     >
