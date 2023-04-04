@@ -20,10 +20,6 @@ const MessageTab = ({ className }: { className?: string }) => {
         setIsOpenMessagesList(true);
     };
 
-    useEffect(() => {
-        console.log(isOpenMessagesList);
-    }, [isOpenMessagesList]);
-
     return (
         <div
             className={`h-auto bg-slate-900 rounded-t-3xl flex flex-col justify-around overflow-hidden ${className}`}

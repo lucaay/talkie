@@ -5,6 +5,7 @@ import CardShareButton from "./CardShareButton";
 import { DocumentData } from "firebase/firestore";
 import { useAuth } from "@/hooks/auth";
 import { useToggleLike } from "@/hooks/posts";
+import { useComments } from "@/hooks/comments";
 
 const CardInteractions = ({ post }: { post: DocumentData }) => {
     const { id, likes, uid } = post;
@@ -18,13 +19,24 @@ const CardInteractions = ({ post }: { post: DocumentData }) => {
     };
 
     const { toggleLike, isLoading: likeLoading } = useToggleLike(config);
-    // const { comments, isLoading: commentsLoading } = useComments(id);
+    const { comments, isLoading: commentsLoading } = useComments(id);
+
+    const toggleComments = () => {
+        console.log("toggleed comments");
+    };
 
     return (
         <div className="flex flex-row text-white w-full h-10 border-t-2 border-gray-600 justify-around mt-2 text-sm">
-            <CardLikeButton toggleLike={toggleLike}  isLiked={isLiked} likes={likes}/>
+            <CardLikeButton
+                toggleLike={toggleLike}
+                isLiked={isLiked}
+                likes={likes}
+            />
 
-            <CardCommentsButton />
+            <CardCommentsButton
+                toggleComments={toggleComments}
+                comments={comments}
+            />
 
             <CardShareButton />
         </div>

@@ -1,6 +1,12 @@
 import React from "react";
 
-const CardCommentsButton = () => {
+const CardCommentsButton = ({
+    toggleComments,
+    comments,
+}: {
+    toggleComments: () => void;
+    comments: any;
+}) => {
     return (
         <div className=" h-full w-full border-r-2 border-gray-600 hover:text-red-400 flex gap-2 items-center justify-center cursor-pointer">
             <svg
