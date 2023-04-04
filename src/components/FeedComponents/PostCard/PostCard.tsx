@@ -1,34 +1,35 @@
 import React from "react";
 import ProfileImage from "../../../assets/download.png";
 import Image from "next/image";
-import { Button, TextInput } from "@mantine/core";
+import { Button, Textarea, TextInput } from "@mantine/core";
 const PostCard = () => {
     return (
-        <div className="w-[600px] bg-slate-900  py-2 px-6 rounded-2]\xl pb-5 pt-5">
+        <div className="w-[600px] bg-slate-900  py-2 px-6 rounded-2xl pb-5 pt-5">
             <div className="flex w-full h-auto justify-center items-center gap-5">
                 <Image
                     className="avatar img-fluid w-12 rounded-full my-3"
                     src={ProfileImage}
                     alt="Avatar"
                 />
-                <TextInput
+                <Textarea
                     placeholder=" 'Talkie' about something..."
                     variant="filled"
                     radius="xl"
                     required
                     size="lg"
+                    autosize
                     className="w-full"
                 />
             </div>
             <div className="flex w-full gap-3 items-center flex-row justify-between pt-2 ">
-                <button className="text-white flex flex-row gap-2 items-center">
+                <button className="text-white flex flex-row gap-2 items-center hover:text-red-500">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-6 h-6 text-white"
+                        className="w-6 h-6"
                     >
                         <path
                             strokeLinecap="round"
@@ -43,7 +44,7 @@ const PostCard = () => {
                     radius="lg"
                     uppercase
                     color="hover:text-blue-400 ease-in-out"
-                    className="bg-blue-600  font-ibm w-1/4"
+                    className="bg-blue-600  font-ibm w-1/4 text-sm"
                 >
                     Post
                 </Button>
