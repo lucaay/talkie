@@ -33,8 +33,12 @@ const Comment = ({ comment }: { comment: DocumentData }) => {
                 <div className="flex flex-row gap-5 justify-between items-center w-full rounded-3xl bg-slate-800  pr-4 pl-4 py-2 ">
                     <div className="flex flex-col w-full">
                         <Link
-                            href="#"
-                            className="text-white font-ibm text-[14px] "
+                            href={
+                                commentUser
+                                    ? `/profile/${commentUser?.id}`
+                                    : "#"
+                            }
+                            className="text-white font-ibm text-[14px] w-max"
                         >
                             {commentUser?.firstName} {commentUser?.lastName}
                         </Link>
