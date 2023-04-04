@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import ProfileImageMessageTab from "../../../../assets/download.png";
 import Link from "next/link";
-function MessageHeader() {
+function MessageHeader({ closeMessage }: { closeMessage: () => void }) {
     return (
         <div className="w-full ">
             <div className=" w-full flex flex-col justify-around items-center gap-4  bg-slate-800 relative ">
@@ -12,7 +12,9 @@ function MessageHeader() {
                         src={ProfileImageMessageTab}
                         alt="Avatar"
                     />
-                    <Link href={'#'} className="text-white">Niptu Diptu</Link>
+                    <Link href={"#"} className="text-white">
+                        Niptu Diptu
+                    </Link>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -20,6 +22,7 @@ function MessageHeader() {
                         strokeWidth={1.5}
                         stroke="currentColor"
                         className="w-6 h-6 absolute right-2 top-6 text-white hover:rotate-90 duration-300 cursor-pointer"
+                        onClick={closeMessage}
                     >
                         <path
                             strokeLinecap="round"

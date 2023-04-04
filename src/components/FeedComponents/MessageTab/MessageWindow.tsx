@@ -3,14 +3,13 @@ import MessageHeader from "./MessageComponents/MessageHeader";
 import MessageContent from "./MessageComponents/MessageContent";
 import MessageFooter from "./MessageComponents/MessageFooter";
 
-const MessageWindow = () => {
+const MessageWindow = ({ closeMessage }: { closeMessage: () => void }) => {
     return (
-       <div className="w-full flex flex-col justify-center items-center rounded-xl overflow-hidden">
-        <MessageHeader/>
-        <MessageContent/>
-        <MessageFooter/>
-       </div>
-
+        <div className="w-full flex flex-col justify-center items-center rounded-xl overflow-hidden">
+            <MessageHeader closeMessage={closeMessage} />
+            <MessageContent />
+            <MessageFooter />
+        </div>
     );
 };
 
