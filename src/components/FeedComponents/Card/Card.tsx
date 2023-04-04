@@ -25,7 +25,7 @@ const Card = ({
                 }`}
             >
                 <div className=" w-full flex flex-row justify-between items-center gap-6 relative">
-                    <CardAvatar image={Image} userId={user?.id} />
+                    <CardAvatar image={Image} userId={user?.id} className="w-12" />
                     <CardHeader
                         firstName={user?.firstName}
                         lastName={user?.lastName}

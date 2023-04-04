@@ -9,6 +9,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { useAuth } from "../../../hooks/auth";
 import { useAddPost } from "../../../hooks/posts";
 import { useForm } from "react-hook-form";
+import CardAvatar from "../Card/CardAvatar";
 
 const PostCard = ({ className }: { className?: string }) => {
     const { register, handleSubmit, reset } = useForm();
@@ -29,11 +30,7 @@ const PostCard = ({ className }: { className?: string }) => {
             className={`w-[500px] bg-slate-900  py-2 px-6 rounded-2xl pb-5 pt-5 ${className}`}
         >
             <div className="flex w-full h-auto justify-center items-center gap-5">
-                <Image
-                    className="avatar img-fluid w-12 rounded-full my-3"
-                    src={ProfileImage}
-                    alt="Avatar"
-                />
+                <CardAvatar image={ProfileImage} userId={user?.uid} className="w-[75px]" />
                 <Textarea
                     placeholder=" 'Talkie' about something..."
                     variant="filled"
