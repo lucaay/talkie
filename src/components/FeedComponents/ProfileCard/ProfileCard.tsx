@@ -17,13 +17,15 @@ const ProfileCard = ({
     firstName = "",
     lastName = "",
     email = "Email",
-    birthdate = '',
+    birthdate = "",
     gender = "Gen",
     userId = "",
 }: ProfileCardinterface) => {
     const { user, isLoading: authLoading } = useAuth();
 
     const { logout, isLoading } = useLogout();
+
+    const date = new Date(birthdate).getDay();
     return (
         <div className="w-[500px] absolute rounded-3xl  bg-slate-900 text-white  flex flex-col items-center justify-center gap-4 top-48 left-32 py-10">
             <Image
@@ -36,7 +38,7 @@ const ProfileCard = ({
                     {firstName} {lastName}
                 </h1>
                 <p>{email}</p>
-                <p>{new Date(birthdate).toLocaleDateString()}</p>
+                <p>{date}</p>
                 <p>{gender}</p>
             </div>
             {user?.uid === userId && (

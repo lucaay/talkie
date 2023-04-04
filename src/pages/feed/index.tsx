@@ -5,24 +5,26 @@ import { Button } from "@mantine/core";
 import React from "react";
 import router from "next/router";
 import MessageTab from "@/components/FeedComponents/MessageTab/MessageTab";
-import { useLogout } from "@/hooks/auth";
+import { useAuth, useLogout } from "@/hooks/auth";
 
 const Feed = () => {
     const { logout, isLoading } = useLogout();
+    const { user, isLoading: authLoading } = useAuth();
     return (
         <div className="bg-login-pattern bg-cover w-auto h-screen flex flex-row items-start justify-start gap-2 pt-4 pl-4">
             <div className="flex flex-col items-center justify-center gap-4 h-full">
                 <FrientsWrapper className="h-full" />
                 <div className="w-full bg-slate-900  rounded-2xl flex flex-row items-center justify-around mb-4 py-4 px-4 gap-6">
                     <Button
-                        onClick={() => router.push("/profile")}
+                        onClick={() => router.push(`/profile/${user?.uid}`)}
                         className="bg-blue-700 w-full"
                     >
                         My profile
                     </Button>
                     <Button onClick={logout} className="bg-blue-700 w-full">
                         Sign Out
-                    </Button>x
+                    </Button>
+                    x
                 </div>
             </div>
             <div className="flex flex-col items-start justify-start gap-4 h-full">
