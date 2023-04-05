@@ -26,13 +26,12 @@ const Feed = () => {
                     <Button onClick={logout} className="bg-blue-700 w-full">
                         Sign Out
                     </Button>
-                    x
                 </div>
             </div>
             <div className="flex flex-col items-start justify-start gap-4 h-full">
                 <PostCard className="" />
                 {posts?.length === 0 ? (
-                    <p className="text-center text-xl">
+                    <p className="text-center mx-auto text-xl text-white">
                         No posts yet... Feeling a little lonely here.
                     </p>
                 ) : (
