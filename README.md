@@ -1,1 +1,1 @@
-hackaton
+hackaton 48h
