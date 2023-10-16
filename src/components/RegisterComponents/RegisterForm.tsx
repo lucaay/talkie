@@ -3,7 +3,6 @@ import { Button, Checkbox, Select, TextInput } from "@mantine/core";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { DatePickerInput } from "@mantine/dates";
-import signUp from "@/firebase/auth/signup";
 import router from "next/router";
 import { notifications } from "@mantine/notifications";
 import { useRegister } from "@/hooks/auth";
