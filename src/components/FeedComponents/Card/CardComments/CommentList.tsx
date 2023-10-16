@@ -10,7 +10,7 @@ export default function CommentList({ post }: { post: DocumentData }) {
 
     return (
         <div className="w-full flex flex-col items-center justify-center gap-4 mt-6">
-            {comments?.length === 0 ? (
+            {!comments ? (
                 <p>There is no comment</p>
             ) : (
                 comments.map((comment) => (
