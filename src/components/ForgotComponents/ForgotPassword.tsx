@@ -2,9 +2,10 @@ import { Button, PasswordInput, TextInput } from "@mantine/core";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-
 function ForgotPasswordForm() {
-    const [errors, setErrors] = useState<{password?: string, email?: string}>({ password: "" , email:""});
+    const [errors, setErrors] = useState<{ password?: string; email?: string }>(
+        { password: "", email: "" }
+    );
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
 
@@ -46,19 +47,7 @@ function ForgotPasswordForm() {
                     value={email}
                     onChange={handleEmail}
                 />
-                {/* <PasswordInput
-                    placeholder="New password"
-                    label="New password"
-                    error={errors.password}
-                    withAsterisk
-                    value={password}
-                    onChange={handlePassword}
-                    styles={{ label: { color: "white" } }}
-                    className="font-ibm w-full"
-                    size="md"
-                /> */}
-                <div className="flex flex-row justify-between w-full">
-                </div>
+                <div className="flex flex-row justify-between w-full"></div>
                 <Button
                     radius="lg"
                     size="md"
@@ -69,16 +58,6 @@ function ForgotPasswordForm() {
                 >
                     Reset password
                 </Button>
-                {/* <Button
-                    radius="lg"
-                    size="md"
-                    uppercase
-                    color="hover:text-blue-400 ease-in-out"
-                    className="bg-blue-600  font-ibm w-1/2 mt-6"
-                    onClick={handleLogin}
-                >
-                    Save password
-                </Button> */}
             </div>
         </>
     );

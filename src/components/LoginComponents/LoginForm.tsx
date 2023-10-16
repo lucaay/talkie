@@ -2,8 +2,7 @@
 import { Button, PasswordInput, TextInput } from "@mantine/core";
 import Link from "next/link";
 import router from "next/router";
-import signIn from "@/firebase/auth/signin";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { notifications } from "@mantine/notifications";
 import { useLogin } from "@/hooks/auth";
 import { useForm } from "react-hook-form";
@@ -37,7 +36,7 @@ function LoginForm() {
                     className="font-ibm w-full"
                     styles={{ label: { color: "white" } }}
                     size="md"
-                    error={errors.email?.message}
+                    error={errors.email?.message as string}
                     type="email"
                     {...register("email", emailValidate)}
                 />
@@ -45,7 +44,7 @@ function LoginForm() {
                     placeholder="Password"
                     type="password"
                     label="Password"
-                    error={errors.password?.message}
+                    error={errors.password?.message as string}
                     withAsterisk
                     styles={{ label: { color: "white" } }}
                     className="font-ibm w-full"
