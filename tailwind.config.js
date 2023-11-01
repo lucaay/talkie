@@ -11,7 +11,7 @@ module.exports = {
         extend: {
             backgroundImage: {
                 "login-pattern":
-                    "url('https://cdn.discordapp.com/attachments/1092390790162038844/1092506289998938213/backgrDreaptaSus.png')",
+                    "url('https://i.imgur.com/HyodIMy.png')",
             },
             boxShadow: {
                 "3xl": [
