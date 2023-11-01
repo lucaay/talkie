@@ -1,6 +1,6 @@
 # Talkie - 48h Hackathon - Dunarea de Jos University of Galati 
 
-LIVE DEMO: https://talkie.vercel.app
+LIVE DEMO: https://talkie-lucaay.vercel.app
 
 EN:
 Social Media App
